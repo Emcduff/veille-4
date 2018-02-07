@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 app.use(express.static('public'));
 ///////////////////////////////////////////////////////////// Route /html/01_form.html
-app.get('/html/01_form.html', function (req, res) {
+app.get('/formulaire', function (req, res) {
  console.log(__dirname);
  res.sendFile( __dirname + "/" + "01_form.html" );
 })
@@ -24,6 +24,11 @@ console.log('la route /traiter_get')
  };
 console.log(reponse);
  res.end(JSON.stringify(reponse));
+})
+////////////////////////////////////////////////////////// Route : membres
+app.get('membres', (req,res)=>{
+
+
 })
 
 var server = app.listen(8081, function () {
