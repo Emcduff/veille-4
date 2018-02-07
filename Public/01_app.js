@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require("fs");
 const app = express();
 app.use(express.static('public'));
 ///////////////////////////////////////////////////////////// Route /html/01_form.html
@@ -28,14 +29,17 @@ console.log(reponse);
  res.end(JSON.stringify(reponse));
 })
 ////////////////////////////////////////////////////////// Route : membres
-app.get('membres', (req,res)=>{
-
-
+app.get('/membres', (req,res)=>{
+	fs.readFile( __dirname + "/data/" + "membres.txt", 'utf8', function (err, data) {
+		if (err) throw err;
+ 		console.log( data );
+ 		res.end( data );
+	});
 })
 
 var server = app.listen(8081, function () {
- var host = server.address().address
- var port = server.address().port
+var host = server.address().address
+var port = server.address().port
  
 console.log("Exemple l'application écoute sur http://%s:%s", host, port)
 
