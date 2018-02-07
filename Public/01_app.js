@@ -40,9 +40,22 @@ app.get('/membres', (req,res)=>{
 	fs.readFile( __dirname + "/data/" + "membres.txt", 'utf8', function (err, data) {
 		if (err) throw err;
  		console.log( data );
- 		res.end( data );
+ 		let objet = JSON.parse('[' + data + ']');
+ 		res.end(
+ 			contenu_objet_json(objet)
+ 		);
 	});
 })
+
+const contenu_objet_json = (o) =>{
+	let info = '<table>';
+ 	for (let p in o)
+ 	{ 
+   		info += '<tr><td>' + p + '</td><td>' + o[p] + '</td></tr>';
+   	}
+	info += '</table>';
+	return info;
+}
 
 var server = app.listen(8081, function () {
 var host = server.address().address
