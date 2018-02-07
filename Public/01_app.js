@@ -1,6 +1,8 @@
 const express = require('express');
 const fs = require("fs");
 const app = express();
+const bodyParser = require('body-parser');
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.use(express.static('public'));
 ///////////////////////////////////////////////////////////// Route /html/01_form.html
 app.get('/formulaire', function (req, res) {
@@ -26,7 +28,12 @@ console.log('la route /traiter_get')
  courriel:req.query.courriel
  };
 console.log(reponse);
- res.end(JSON.stringify(reponse));
+
+fs.appendFile(__dirname + "/data/membres.txt", ',' + JSON.stringify(reponse), function (err) {
+  if (err) throw err;
+  console.log('Sauvegardé');
+});
+
 })
 ////////////////////////////////////////////////////////// Route : membres
 app.get('/membres', (req,res)=>{
