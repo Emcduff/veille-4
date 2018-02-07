@@ -27,7 +27,6 @@ console.log('la route /traiter_get')
  telephone:req.query.telephone,
  courriel:req.query.courriel
  };
-console.log(reponse);
 
 fs.appendFile(__dirname + "/data/membres.txt", ',' + JSON.stringify(reponse), function (err) {
   if (err) throw err;
@@ -39,11 +38,8 @@ fs.appendFile(__dirname + "/data/membres.txt", ',' + JSON.stringify(reponse), fu
 app.get('/membres', (req,res)=>{
 	fs.readFile( __dirname + "/data/" + "membres.txt", 'utf8', function (err, data) {
 		if (err) throw err;
- 		console.log( data );
  		let objet = JSON.parse('[' + data + ']');
- 		res.end(
- 			contenu_objet_json(objet)
- 		);
+ 		res.end(contenu_objet_json(objet));
 	});
 })
 
