@@ -7,7 +7,7 @@ app.use(express.static('public'));
 ///////////////////////////////////////////////////////////// Route /html/01_form.html
 app.get('/formulaire', function (req, res) {
  console.log(__dirname);
- res.sendFile( __dirname + "/html/" + "01_form.html" );
+ res.sendFile( __dirname + "/Public/html/" + "01_form.html" );
 })
 //////////////////////////////////////////////////////////// Route /
 app.get('/', (req, res) => {
@@ -28,7 +28,7 @@ console.log('la route /traiter_get')
  courriel:req.query.courriel
  };
 
-fs.appendFile(__dirname + "/data/membres.txt", ',' + JSON.stringify(reponse), function (err) {
+fs.appendFile(__dirname + "/Public/data/membres.txt", ',' + JSON.stringify(reponse), function (err) {
   if (err) throw err;
   console.log('Sauvegardé');
 });
@@ -36,7 +36,7 @@ fs.appendFile(__dirname + "/data/membres.txt", ',' + JSON.stringify(reponse), fu
 })
 ////////////////////////////////////////////////////////// Route : membres
 app.get('/membres', (req,res)=>{
-	fs.readFile( __dirname + "/data/" + "membres.txt", 'utf8', function (err, data) {
+	fs.readFile( __dirname + "/Public/data/" + "membres.txt", 'utf8', function (err, data) {
 		if (err) throw err;
  		let objet = JSON.parse('[' + data + ']');
  		res.end(contenu_objet_json(objet));
@@ -45,10 +45,15 @@ app.get('/membres', (req,res)=>{
 
 const contenu_objet_json = (o) =>{
 	let info = '<table>';
- 	for (let p in o)
- 	{ 
-   		info += '<tr><td>' + p + '</td><td>' + o[p] + '</td></tr>';
-   	}
+	for(let element of o) {
+
+		for (let p in element)
+ 		{ 
+   			info += '<tr><td>' + p + '</td><td>' + element[p] + '</td></tr>';
+   		}
+
+	}
+ 	
 	info += '</table>';
 	return info;
 }
